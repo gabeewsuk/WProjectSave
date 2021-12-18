@@ -22,6 +22,7 @@ def findAndUpdatePost(db, user):
     "postComments":user[3],
     "postLikes":user[4],
     "Description":user[6],
+    "hashtag":user[7],
     "lastUserUpdate":date.strftime("%Y-%m-%d %H:%M:%S")}},upsert = True)
     #except Exception as Exc:
         #print("!!!!!!!findAndUpdate.py!!!!!")

@@ -50,7 +50,7 @@ def newHashTag(hashtags):
 
         print("Done updating userPosts!")
 
-newHashTag(["saberslice","gabearmy", "bbowlflyin"])
+#newHashTag(["saberslice","gabearmy", "bbowlflyin"])
 
 
 #db = connect('WellsData')

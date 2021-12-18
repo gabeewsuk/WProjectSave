@@ -18,9 +18,10 @@ def QueryData():
         document["linkToPost"],
         document["Description"],
         document["postComments"],
-        document["postLikes"]]
+        document["postLikes"],
+        document["hashtag"]]
         data.append(temp)
     
     toDF(data)
 
-QueryData()
+#QueryData()

@@ -17,7 +17,7 @@ from db.Helpers.dbConnect import connect
 #getUserId from an array of usernames
 def getPostStats(post_ids):
     subset = []
-    
+    hashtag = post_ids[0][1]
 
     querystrings = []
     out = []
@@ -38,6 +38,7 @@ def getPostStats(post_ids):
 
 
     def load_url(id):
+        id = id[0]
         response = requests.request("GET", url, headers=headers, params={"short_code":id})
         print(id)
         while response.status_code == 429:
@@ -84,6 +85,8 @@ def getPostStats(post_ids):
         code = document['data']['shortcode_media']["shortcode"]
         link_to_post = "https://www.instagram.com/p/"+code+"/"
         caption = document['data']['shortcode_media']["edge_media_to_caption"]["edges"][0]["node"]["text"]
+
+        #add hashtag
         #adding each post id in with corresponding hashtag to dictionary
        
         tempPostData.append(username)
@@ -93,6 +96,7 @@ def getPostStats(post_ids):
         tempPostData.append(post_likes)      
         tempPostData.append(link_to_post)
         tempPostData.append(caption)
+        tempPostData.append(hashtag)
         posts.append(tempPostData)
 
 

@@ -72,7 +72,8 @@ def getHashTagStats(hashtags):
             posts = document['data']["hashtag"]["edge_hashtag_to_media"]["edges"]
             for doc in posts:
                 postId = doc["node"]["shortcode"]
-                tempPostIds.append(postId)
+                temp = [postId, hashtag]
+                tempPostIds.append(temp)
 
             #adding each post id in with corresponding hashtag to dictionary
             post_ids.append(tempPostIds)
