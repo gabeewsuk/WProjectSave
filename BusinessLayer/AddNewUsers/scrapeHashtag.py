@@ -23,13 +23,17 @@ def newHashTag(hashtags):
     temp2 = 0
     print(len(shortcodes))
     shortcodes2 =[]
+    print(shortcodes)
+    #time.sleep()
+
     for x in shortcodes:
         for y in x:
-            print(y)
+            #print(y)
         
             temp2+=1
-            if temp2 > 600:
-                temp.append(x)
+            #must be 1 less than what is shown ie. 659 is 658
+            if temp2 > 400:
+                temp.append(y)
             print(temp2)
         
     print("yo")
@@ -37,17 +41,17 @@ def newHashTag(hashtags):
     print(len(temp))
     print(len(shortcodes2))
     print(len(shortcodes))
-    time.sleep(20)
+    #time.sleep(20)
     subset = []
     i = 0
     for hashtag in shortcodes2:
         #print(x)
         userCount = len(hashtag)
         for post in hashtag:
-            print(post)
+            
             subset.append(post)
             #print(subset)
-            if i % 200 == 0 or userCount < 200:
+            if i % 200 == 0 or (userCount < 200 and i % 50 == 0) or (userCount < 50 and i % 10 == 0) or userCount<10:
                 users = getPostStats(subset)
                 with concurrent.futures.ThreadPoolExecutor(max_workers=500) as executor:
                     future_to_url = (executor.submit(findAndUpdatePost, db,  user)for user in users)

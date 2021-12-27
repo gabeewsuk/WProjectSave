@@ -25,7 +25,7 @@ def getPostStats(post_ids):
     querystrings = []
     out = []
     counter = 0
-    print(post_ids)
+    #print(post_ids)
 
      
             
@@ -43,6 +43,7 @@ def getPostStats(post_ids):
     def load_url(id):
         id = id[0]
         response = requests.request("GET", url, headers=headers, params={"short_code":id})
+        print("ID:")
         print(id)
         while response.status_code == 429:
             print("API server is getting too many requests")
@@ -109,8 +110,11 @@ def getPostStats(post_ids):
             tempPostData.append(postPic)
 
             posts.append(tempPostData)
-        except:
+        except Exception as exc:
+            #print(document)
+            #print(exc)
             print("!!!!!!GETUSERPOSTDATA.py!!!!!!")
+            time.sleep(10)
 
 
 
