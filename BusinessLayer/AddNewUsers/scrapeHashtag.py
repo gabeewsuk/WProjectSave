@@ -19,16 +19,34 @@ def newHashTag(hashtags):
     
     db = connect('WellsData')
     shortcodes = getHashTagStats(hashtags)
-    print(shortcodes)
+    temp = []
+    temp2 = 0
+    print(len(shortcodes))
+    shortcodes2 =[]
+    for x in shortcodes:
+        for y in x:
+            print(y)
+        
+            temp2+=1
+            if temp2 > 600:
+                temp.append(x)
+            print(temp2)
+        
+    print("yo")
+    shortcodes2.append(temp)
+    print(len(temp))
+    print(len(shortcodes2))
+    print(len(shortcodes))
+    time.sleep(20)
     subset = []
     i = 0
-    for hashtag in shortcodes:
+    for hashtag in shortcodes2:
         #print(x)
         userCount = len(hashtag)
         for post in hashtag:
-
+            print(post)
             subset.append(post)
-            print(subset)
+            #print(subset)
             if i % 200 == 0 or userCount < 200:
                 users = getPostStats(subset)
                 with concurrent.futures.ThreadPoolExecutor(max_workers=500) as executor:
@@ -53,5 +71,4 @@ def newHashTag(hashtags):
 #newHashTag(["saberslice","gabearmy", "bbowlflyin"])
 
 
-#db = connect('WellsData')
-#db.Hashtags.delete_many({})
+

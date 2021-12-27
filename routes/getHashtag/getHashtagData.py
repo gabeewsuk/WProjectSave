@@ -4,6 +4,7 @@ import time
 import concurrent.futures
 import requests
 from decouple import config
+from routes.getHashtag.getRecursiveHashtag import getHashTagWhileLoop
 
 #from Folder.db.Finders.dbFindUserNames import findUserNames
 
@@ -19,7 +20,7 @@ def getHashTagStats(hashtags):
      
             
 
-    url = config("API_URL")+"/hash_tag_medias"
+    url = config("API_URL")+"/hash_tag_medias_v2"
 
 
     headers = {
@@ -64,28 +65,39 @@ def getHashTagStats(hashtags):
     #loop through all hashtags and get data
     for document in out:
         tempPostIds = []
-        try:
-            #check if it has next page
-            hasNextPage = document['data']["hashtag"]["edge_hashtag_to_media"]["page_info"]["has_next_page"]
-            hashtag = document["data"]["hashtag"]["name"]
-            #get posts and loop through to get post ids
-            posts = document['data']["hashtag"]["edge_hashtag_to_media"]["edges"]
-            for doc in posts:
-                postId = doc["node"]["shortcode"]
-                temp = [postId, hashtag]
-                tempPostIds.append(temp)
+    
+        #check if it has next page
+        hasNextPage = document['data']["hashtag"]["edge_hashtag_to_ranked_media"]["page_info"]["has_next_page"]
+        hashtag = document["data"]["hashtag"]["name"]
+        next_cursor = document['data']["hashtag"]["edge_hashtag_to_ranked_media"]["page_info"]["end_cursor"]
 
-            #adding each post id in with corresponding hashtag to dictionary
-            post_ids.append(tempPostIds)
+        next_cursor_array = []
+        next_cursor_array.append(next_cursor)
+
+        #get posts and loop through to get post ids
+
+        posts = document['data']["hashtag"]["edge_hashtag_to_ranked_media"]["edges"]
+        for doc in posts:
+            postId = doc["node"]["shortcode"]
+            temp = [postId, hashtag]
+            tempPostIds.append(temp)
+        if hasNextPage:
+            count = document['data']["hashtag"]["edge_hashtag_to_ranked_media"]["count"]
+            print(count)
+            time.sleep(3)
+            tenmpPostIds = []
+            next_cursor =""
+            tempPostIds = getHashTagWhileLoop(hashtag, tempPostIds, next_cursor_array, count)
+            print(len(tempPostIds[0]))
+
+        post_ids.append(tempPostIds)
 
 
-                
+            
 
-            if hasNextPage:
-                end_cursor = document['data']["hashtag"]["edge_hashtag_to_media"]["page_info"]["end_cursor"]
- 
-        except Exception as exc:
-            print(exc)
+        if hasNextPage:
+            end_cursor = document['data']["hashtag"]["edge_hashtag_to_ranked_media"]["page_info"]["end_cursor"]
+
 
 
     return post_ids

@@ -6,14 +6,14 @@ from datetime import datetime as d
 def findAndUpdatePost(db, user):
     date = d.now()
     #print(user)
-    print(str(user)+"\n\n\n")
+    #print(str(user)+"\n\n\n")
     
 
     #check if user exitss
         #updating db if it does not exist
     #try:
     
-    print(len(user))
+    #print(len(user))
     db.Hashtags.find_one_and_update({"linkToPost":user[5]},
     {"$set":
     {"followers":user[1],
@@ -23,6 +23,8 @@ def findAndUpdatePost(db, user):
     "postLikes":user[4],
     "Description":user[6],
     "hashtag":user[7],
+    "date":user[8],
+    "postPic":user[9],
     "lastUserUpdate":date.strftime("%Y-%m-%d %H:%M:%S")}},upsert = True)
     #except Exception as Exc:
         #print("!!!!!!!findAndUpdate.py!!!!!")

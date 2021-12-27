@@ -9,6 +9,9 @@ sys.path.append(os.path.abspath(os.path.join('../../..', 'WellsSoftware')))
 from db.findNUpdate.findAndUpdate import findAndUpdatePost
 from db.Helpers.dbConnect import connect
 
+from datetime import datetime
+
+
 #from Folder.db.Finders.dbFindUserNames import findUserNames
 
 
@@ -74,30 +77,40 @@ def getPostStats(post_ids):
     #loop through all hashtags and get data
     for document in out:
         
-        tempPostData = []
-        username = document['data']['shortcode_media']['owner']['username']
-        followers = document['data']['shortcode_media']['owner']['edge_followed_by']['count']
-        profilePic = document['data']['shortcode_media']['owner']['profile_pic_url']
+        try:
+            tempPostData = []
+            username = document['data']['shortcode_media']['owner']['username']
+            followers = document['data']['shortcode_media']['owner']['edge_followed_by']['count']
+            profilePic = document['data']['shortcode_media']['owner']['profile_pic_url']
 
-        #Post Data
-        post_comments = document['data']['shortcode_media']["edge_media_to_comment"]["count"]
-        post_likes = document['data']['shortcode_media']["edge_media_preview_like"]["count"]
-        code = document['data']['shortcode_media']["shortcode"]
-        link_to_post = "https://www.instagram.com/p/"+code+"/"
-        caption = document['data']['shortcode_media']["edge_media_to_caption"]["edges"][0]["node"]["text"]
+            #Post Data
+            post_comments = document['data']['shortcode_media']["edge_media_to_comment"]["count"]
+            post_likes = document['data']['shortcode_media']["edge_media_preview_like"]["count"]
+            code = document['data']['shortcode_media']["shortcode"]
+            link_to_post = "https://www.instagram.com/p/"+code+"/"
+            caption = document['data']['shortcode_media']["edge_media_to_caption"]["edges"][0]["node"]["text"]
+            timestamp = document["data"]["shortcode_media"]["taken_at_timestamp"]
+            date = datetime.fromtimestamp(timestamp)
+            postPic = document["data"]["shortcode_media"]["display_url"]
 
-        #add hashtag
-        #adding each post id in with corresponding hashtag to dictionary
-       
-        tempPostData.append(username)
-        tempPostData.append(followers)
-        tempPostData.append(profilePic)
-        tempPostData.append(post_comments)
-        tempPostData.append(post_likes)      
-        tempPostData.append(link_to_post)
-        tempPostData.append(caption)
-        tempPostData.append(hashtag)
-        posts.append(tempPostData)
+
+            #add hashtag
+            #adding each post id in with corresponding hashtag to dictionary
+        
+            tempPostData.append(username)
+            tempPostData.append(followers)
+            tempPostData.append(profilePic)
+            tempPostData.append(post_comments)
+            tempPostData.append(post_likes)      
+            tempPostData.append(link_to_post)
+            tempPostData.append(caption)
+            tempPostData.append(hashtag)
+            tempPostData.append(date)
+            tempPostData.append(postPic)
+
+            posts.append(tempPostData)
+        except:
+            print("!!!!!!GETUSERPOSTDATA.py!!!!!!")
 
 
 

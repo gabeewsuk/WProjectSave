@@ -1,8 +1,12 @@
 from BusinessLayer.AddNewUsers.scrapeHashtag import newHashTag
 from BusinessLayer.DataToCSV.queryData import QueryData
+import time
+from db.Helpers.dbConnect import connect
 
-
-hashtags = ["saberslice","gabearmy", "bbowlflyin"]
-#newHashTag(hashtags)
+hashtag = "taimiapp"
+hashtags = [hashtag]
+newHashTag(hashtags)
 #time.sleep(20)
-QueryData()
+#db = connect('WellsData')
+#db.Hashtags.delete_many({"hashtag":"taimiapp"})
+QueryData(hashtag)
