@@ -3,10 +3,10 @@ from BusinessLayer.DataToCSV.queryData import QueryData
 import time
 from db.Helpers.dbConnect import connect
 
-hashtag = "taimiapp"
+hashtag = "iworkwithprimark"
 hashtags = [hashtag]
 newHashTag(hashtags)
 #time.sleep(20)
 #db = connect('WellsData')
 #db.Hashtags.delete_many({"hashtag":"taimiapp"})
-QueryData("taimiapp")
+QueryData("iworkwithprimark")
