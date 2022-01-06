@@ -31,7 +31,6 @@ def newHashTag(hashtags):
             #print(y)
         
             temp2+=1
-            #must be 1 less than what is shown ie. 659 is 658
             if temp2 >= 8207:
                 temp.append(y)
             print(temp2)
